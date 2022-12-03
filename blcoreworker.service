@@ -1,0 +1,9 @@
+﻿[Unit]
+Description=Broom or Lamp Core Worker Service
+
+[Service]
+Type=notify
+ExecStart=/usr/sbin/BLCoreWorkerService --port=53
+
+[Install]
+WantedBy=multi-user.target
