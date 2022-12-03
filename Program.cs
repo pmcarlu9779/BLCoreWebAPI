@@ -9,7 +9,7 @@ namespace BLCoreWebAPI
 {
     public class Program
     {
-        
+
         public static void Main(string[] args)
         {
             NLog.Logger logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
@@ -39,7 +39,8 @@ namespace BLCoreWebAPI
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                }).UseSystemd()
+                })
+                .UseSystemd()
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<BLCoreWorkerService>();
