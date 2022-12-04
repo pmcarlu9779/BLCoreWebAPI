@@ -23,7 +23,7 @@ namespace BLCoreWebAPI
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("BLCoreWorkerService running at: {time}, command: {string}", DateTimeOffset.Now, ApiCommand);
-                await Task.Delay(6000, stoppingToken);
+                await Task.Delay(5000, stoppingToken);
             }
         }
     }

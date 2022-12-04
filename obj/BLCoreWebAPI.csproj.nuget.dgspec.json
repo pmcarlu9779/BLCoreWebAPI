@@ -62,6 +62,14 @@
               "target": "Package",
               "version": "[3.1.10, )"
             },
+            "NJsonSchema.CodeGeneration": {
+              "target": "Package",
+              "version": "[10.8.0, )"
+            },
+            "NJsonSchema.CodeGeneration.CSharp": {
+              "target": "Package",
+              "version": "[10.8.0, )"
+            },
             "NLog.Extensions.Logging": {
               "target": "Package",
               "version": "[5.2.0, )"
@@ -69,6 +77,18 @@
             "NLog.Web.AspNetCore": {
               "target": "Package",
               "version": "[4.9.3, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.2, )"
+            },
+            "Newtonsoft.Json.Bson": {
+              "target": "Package",
+              "version": "[1.0.2, )"
+            },
+            "Newtonsoft.Json.Schema": {
+              "target": "Package",
+              "version": "[3.0.14, )"
             }
           },
           "imports": [
