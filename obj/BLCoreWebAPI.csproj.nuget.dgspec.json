@@ -62,6 +62,10 @@
               "target": "Package",
               "version": "[3.1.10, )"
             },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.18.0, )"
+            },
             "NJsonSchema.CodeGeneration": {
               "target": "Package",
               "version": "[10.8.0, )"
@@ -89,6 +93,18 @@
             "Newtonsoft.Json.Schema": {
               "target": "Package",
               "version": "[3.0.14, )"
+            },
+            "Swashbuckle.AspNetCore.Swagger": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerGen": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerUI": {
+              "target": "Package",
+              "version": "[6.4.0, )"
             }
           },
           "imports": [

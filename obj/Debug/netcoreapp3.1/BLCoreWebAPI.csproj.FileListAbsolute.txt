@@ -4,9 +4,6 @@ C:\Users\pmcar\source\repos\BLCoreWebAPI\obj\Debug\netcoreapp3.1\BLCoreWebAPI.Mv
 C:\Users\pmcar\source\repos\BLCoreWebAPI\bin\Debug\netcoreapp3.1\nlog.config
 C:\Users\pmcar\source\repos\BLCoreWebAPI\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\pmcar\source\repos\BLCoreWebAPI\bin\Debug\netcoreapp3.1\appsettings.json
-C:\Users\pmcar\source\repos\BLCoreWebAPI\bin\Debug\netcoreapp3.1\GenerateJSONClasses\NodeRed_JSON_Schema.json
-C:\Users\pmcar\source\repos\BLCoreWebAPI\bin\Debug\netcoreapp3.1\GenerateJSONClasses\obj\GenerateJSONClasses.csproj.nuget.dgspec.json
-C:\Users\pmcar\source\repos\BLCoreWebAPI\bin\Debug\netcoreapp3.1\GenerateJSONClasses\obj\project.assets.json
 C:\Users\pmcar\source\repos\BLCoreWebAPI\bin\Debug\netcoreapp3.1\BLCoreWebAPI.exe
 C:\Users\pmcar\source\repos\BLCoreWebAPI\bin\Debug\netcoreapp3.1\BLCoreWebAPI.deps.json
 C:\Users\pmcar\source\repos\BLCoreWebAPI\bin\Debug\netcoreapp3.1\BLCoreWebAPI.runtimeconfig.json
@@ -64,3 +61,16 @@ C:\Users\pmcar\source\repos\BLCoreWebAPI\obj\Debug\netcoreapp3.1\BLCoreWebAPI.cs
 C:\Users\pmcar\source\repos\BLCoreWebAPI\obj\Debug\netcoreapp3.1\BLCoreWebAPI.dll
 C:\Users\pmcar\source\repos\BLCoreWebAPI\obj\Debug\netcoreapp3.1\BLCoreWebAPI.pdb
 C:\Users\pmcar\source\repos\BLCoreWebAPI\obj\Debug\netcoreapp3.1\BLCoreWebAPI.genruntimeconfig.cache
+C:\Users\pmcar\source\repos\BLCoreWebAPI\bin\Debug\netcoreapp3.1\GenerateJSONClassesUtility\bin\Debug\netcoreapp3.1\GenerateJSONClasses.deps.json
+C:\Users\pmcar\source\repos\BLCoreWebAPI\bin\Debug\netcoreapp3.1\GenerateJSONClassesUtility\bin\Debug\netcoreapp3.1\GenerateJSONClasses.runtimeconfig.dev.json
+C:\Users\pmcar\source\repos\BLCoreWebAPI\bin\Debug\netcoreapp3.1\GenerateJSONClassesUtility\bin\Debug\netcoreapp3.1\GenerateJSONClasses.runtimeconfig.json
+C:\Users\pmcar\source\repos\BLCoreWebAPI\bin\Debug\netcoreapp3.1\GenerateJSONClassesUtility\bin\Debug\netcoreapp3.1\NodeRed_JSON_Schema.json
+C:\Users\pmcar\source\repos\BLCoreWebAPI\bin\Debug\netcoreapp3.1\GenerateJSONClassesUtility\NodeRed_JSON_Schema.json
+C:\Users\pmcar\source\repos\BLCoreWebAPI\bin\Debug\netcoreapp3.1\GenerateJSONClassesUtility\obj\GenerateJSONClasses.csproj.nuget.dgspec.json
+C:\Users\pmcar\source\repos\BLCoreWebAPI\bin\Debug\netcoreapp3.1\GenerateJSONClassesUtility\obj\project.assets.json
+C:\Users\pmcar\source\repos\BLCoreWebAPI\bin\Debug\netcoreapp3.1\Microsoft.OpenApi.dll
+C:\Users\pmcar\source\repos\BLCoreWebAPI\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\pmcar\source\repos\BLCoreWebAPI\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\pmcar\source\repos\BLCoreWebAPI\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\pmcar\source\repos\BLCoreWebAPI\obj\Debug\netcoreapp3.1\BLCoreWebAPI.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\pmcar\source\repos\BLCoreWebAPI\obj\Debug\netcoreapp3.1\BLCoreWebAPI.csproj.AssemblyReference.cache
