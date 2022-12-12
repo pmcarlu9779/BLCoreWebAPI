@@ -21,11 +21,13 @@ namespace BLCoreWebAPI.Controllers
 
         [HttpGet]
         [Route("Capabilities")]
-        public string Capabilities()
+        public object Capabilities()
         {
             //BLCoreWorkerService.ApiCommand = apiCommand;
-            _logger.LogInformation(RunningMessage());
-            return RunningMessage();
+            Capabilities capabilities = new Capabilities();
+            object capabilitiesList = capabilities.getCapabilitiesList();
+            _logger.LogInformation($"Capabilities list: {capabilitiesList}");
+            return capabilitiesList;
         }
 
         // The acceptance of whatever command should be dynamic. It should be a HttpPost, and it should check against the capabilities list, first.
@@ -34,10 +36,10 @@ namespace BLCoreWebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Consumes("application/json")]
-        [Route("CreateNode")]
-        public ActionResult<NodeRedNode> CreateNode(string createNodeJSONObject)
+        [Route("Node")]
+        public ActionResult<NodeRedNode> Node(string createNodeJSONObject)
         {
-            BLCoreWorkerService.ApiCommand = "CreateNode";
+            BLCoreWorkerService.ApiCommand = "Node";
             _logger.LogInformation(RunningMessage());
 
             // Call createNode to do the work.

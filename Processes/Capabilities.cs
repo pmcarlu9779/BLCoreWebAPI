@@ -5,7 +5,7 @@ namespace BLCoreWebAPI.Processes
 {
     public class Capabilities
     {
-        MongoDBHelper mongo;
+        MongoDBHelper mongo = new MongoDBHelper("mongodb://localhost:27017","BroomOrLamp");
 
         public object getCapabilitiesList()
         {
