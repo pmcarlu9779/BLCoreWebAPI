@@ -5,14 +5,10 @@ namespace BLCoreWebAPI.Processes
 {
     public class Capabilities
     {
-        MongoDBHelper mongo = new MongoDBHelper("mongodb://localhost:27017","BroomOrLamp");
-
-        public object getCapabilitiesList()
+        public object getCapabilitiesList(string dbConnectionString, string dbName)
         {
-            object capabilitiesList = new object();
-
-            capabilitiesList = mongo.LoadAllDocuments<NodeRedNode>("capabilities");
-
+            MongoDBHelper mongo = new MongoDBHelper(dbConnectionString, dbName);
+            var capabilitiesList = mongo.LoadAllDocuments<NodeRedNode>("capabilities");
             return capabilitiesList;
         }
     }

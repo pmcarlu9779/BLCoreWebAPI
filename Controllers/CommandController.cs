@@ -3,34 +3,35 @@ using BLCoreWebAPI.Processes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace BLCoreWebAPI.Controllers
 {
     [ApiController]
-    //[Route("Command/{apiCommand}")]
     [Route("Command/")]
     public class CommandController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private string RunningMessage() => $"apiCommand: {BLCoreWorkerService.ApiCommand}";
+        private readonly ConnectionStrings _connectionStrings;
+        private readonly GitRepositories _gitRepositories;
 
-        public CommandController(ILogger<HomeController> logger)
+        public CommandController(ILogger<HomeController> logger, IOptions<ConnectionStrings> connectionStrings, IOptions<GitRepositories> gitRepositories)
         {
             _logger = logger;
+            _connectionStrings = connectionStrings.Value;
+            _gitRepositories = gitRepositories.Value;
         }
 
         [HttpGet]
         [Route("Capabilities")]
         public object Capabilities()
         {
-            //BLCoreWorkerService.ApiCommand = apiCommand;
             Capabilities capabilities = new Capabilities();
-            object capabilitiesList = capabilities.getCapabilitiesList();
+            object capabilitiesList = capabilities.getCapabilitiesList(_connectionStrings.dbConnectionString, _connectionStrings.dbName);
             _logger.LogInformation($"Capabilities list: {capabilitiesList}");
             return capabilitiesList;
         }
-
-        // The acceptance of whatever command should be dynamic. It should be a HttpPost, and it should check against the capabilities list, first.
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -44,7 +45,7 @@ namespace BLCoreWebAPI.Controllers
 
             // Call createNode to do the work.
             Node node = new Node();
-            NodeRedNode nodeRedNode = node.createNode(createNodeJSONObject);
+            NodeRedNode nodeRedNode = node.createNode(createNodeJSONObject, _gitRepositories.nodeRedRepo);
 
             // Return the node JSON, for testing purposes, but the node should automatically be applied to the NodeRed server.
             return nodeRedNode;

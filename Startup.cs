@@ -1,3 +1,4 @@
+using BLCoreWebAPI.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +21,8 @@ namespace BLCoreWebAPI
         {
             services.AddControllers();
             services.AddSwaggerGen();
+            services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
+            services.Configure<GitRepositories>(Configuration.GetSection("GitRepositories"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
