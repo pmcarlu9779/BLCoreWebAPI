@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace BLCoreWebAPI
 {
@@ -36,6 +37,8 @@ namespace BLCoreWebAPI
                 {
                     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
                     options.RoutePrefix = string.Empty;
+                    options.DefaultModelRendering(ModelRendering.Model);
+                    options.DefaultModelsExpandDepth(-1);
                 });
             }
 

@@ -1,14 +1,16 @@
 ﻿using BLCoreWebAPI.Database;
 using BLCoreWebAPI.Models;
+using System.Collections.Generic;
 
 namespace BLCoreWebAPI.Processes
 {
     public class Capabilities
     {
-        public object getCapabilitiesList(string dbConnectionString, string dbName)
+        //public object getCapabilitiesList(string dbConnectionString, string dbName)
+        public List<NodeRedNode> getCapabilitiesList(string dbConnectionString, string dbName)
         {
             MongoDBHelper mongo = new MongoDBHelper(dbConnectionString, dbName);
-            var capabilitiesList = mongo.LoadAllDocuments<NodeRedNode>("capabilities");
+            List<NodeRedNode> capabilitiesList = mongo.LoadAllDocuments<NodeRedNode>("capabilities");
             return capabilitiesList;
         }
     }

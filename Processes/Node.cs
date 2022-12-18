@@ -1,13 +1,18 @@
 ﻿using BLCoreWebAPI.Models;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace BLCoreWebAPI.Processes
 {
     public class Node
     {
-        public NodeRedNode createNode(object createNodeJSONObject, string nodeRedRepo)
+        public List<NodeRedNode> createNode(object createNodeJSONObject, string dbConnectionString, string dbName, string nodeRedRepo)
         {
             // First, query for capability in MongoDB.
+            Capabilities capabilities = new Capabilities();
+            List<NodeRedNode> capabilitiesList = capabilities.getCapabilitiesList(dbConnectionString, dbName);
+
+            Debug.WriteLine(capabilitiesList);
 
             // Search for capability in results.
 
@@ -15,8 +20,9 @@ namespace BLCoreWebAPI.Processes
 
             // Then, insert that NodeRedNode object into MongoDB.
 
-            NodeRedNode nodeRedNode = new NodeRedNode();
-            return nodeRedNode;
+            //NodeRedNode nodeRedNode = new NodeRedNode();
+            //return nodeRedNode;
+            return capabilitiesList;
         }
 
         public void addNodeToNodeRedRepo()

@@ -1,5 +1,4 @@
-﻿
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace BLCoreWebAPI.Models
@@ -50,7 +49,7 @@ namespace BLCoreWebAPI.Models
         public bool Senderr { get; set; }
 
         [BsonElement("headers")]
-        public BsonArray Headers { get; set; }
+        public dynamic Headers { get; set; }
 
         [BsonElement("x")]
         public int X { get; set; }

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
+using System.Web.Http.Description;
 
 namespace BLCoreWebAPI.Controllers
 {
@@ -12,7 +14,6 @@ namespace BLCoreWebAPI.Controllers
     public class CommandController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private string RunningMessage() => $"apiCommand: {BLCoreWorkerService.ApiCommand}";
         private readonly ConnectionStrings _connectionStrings;
         private readonly GitRepositories _gitRepositories;
 
@@ -25,29 +26,22 @@ namespace BLCoreWebAPI.Controllers
 
         [HttpGet]
         [Route("Capabilities")]
-        public object Capabilities()
+        public List<NodeRedNode> Capabilities()
         {
             Capabilities capabilities = new Capabilities();
-            object capabilitiesList = capabilities.getCapabilitiesList(_connectionStrings.dbConnectionString, _connectionStrings.dbName);
+            List<NodeRedNode> capabilitiesList = capabilities.getCapabilitiesList(_connectionStrings.dbConnectionString, _connectionStrings.dbName);
             _logger.LogInformation($"Capabilities list: {capabilitiesList}");
             return capabilitiesList;
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Consumes("application/json")]
+        [ResponseType(typeof(List<NodeRedNode>))]
         [Route("Node")]
-        public ActionResult<NodeRedNode> Node(string createNodeJSONObject)
+        public List<NodeRedNode> Node(NodeRedNode createNodeJSONObject)
         {
-            BLCoreWorkerService.ApiCommand = "Node";
-            _logger.LogInformation(RunningMessage());
-
-            // Call createNode to do the work.
             Node node = new Node();
-            NodeRedNode nodeRedNode = node.createNode(createNodeJSONObject, _gitRepositories.nodeRedRepo);
-
-            // Return the node JSON, for testing purposes, but the node should automatically be applied to the NodeRed server.
+            List<NodeRedNode> nodeRedNode = node.createNode(createNodeJSONObject, _connectionStrings.dbConnectionString, _connectionStrings.dbName, _gitRepositories.nodeRedRepo);
+            _logger.LogInformation($"Created Node: {nodeRedNode}");
             return nodeRedNode;
         }
     }
