@@ -8,13 +8,16 @@ namespace BLCoreWebAPI.Processes
     {
         public List<NodeRedNode> createNode(object createNodeJSONObject, string dbConnectionString, string dbName, string nodeRedRepo)
         {
-            // First, query for capability in MongoDB.
             Capabilities capabilities = new Capabilities();
             List<NodeRedNode> capabilitiesList = capabilities.getCapabilitiesList(dbConnectionString, dbName);
 
-            Debug.WriteLine(capabilitiesList);
-
-            // Search for capability in results.
+            if (capabilitiesList.Count != 0)
+            {
+                foreach (NodeRedNode capability in capabilitiesList)
+                {
+                    // What identifier(s) do we look for in the object to determine it exists?
+                }
+            }
 
             // If found, return some message stating this.  If not found, create the NodeRedNode.
 
