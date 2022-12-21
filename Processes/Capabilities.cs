@@ -6,7 +6,6 @@ namespace BLCoreWebAPI.Processes
 {
     public class Capabilities
     {
-        //public object getCapabilitiesList(string dbConnectionString, string dbName)
         public List<NodeRedNode> getCapabilitiesList(string dbConnectionString, string dbName)
         {
             MongoDBHelper mongo = new MongoDBHelper(dbConnectionString, dbName);

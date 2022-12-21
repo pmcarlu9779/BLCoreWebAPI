@@ -1,6 +1,5 @@
 ﻿using BLCoreWebAPI.Models;
 using BLCoreWebAPI.Processes;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
