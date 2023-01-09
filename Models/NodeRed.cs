@@ -59,5 +59,8 @@ namespace BLCoreWebAPI.Models
 
         [BsonElement("wires")]
         public dynamic Wires { get; set; }
+
+        [BsonElement("info")]
+        public string Info { get; set; }
     }
 }

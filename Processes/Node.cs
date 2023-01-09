@@ -11,7 +11,7 @@ namespace BLCoreWebAPI.Processes
         {
             Capabilities capabilities = new Capabilities();
             List<NodeRedNode> capabilitiesList = capabilities.getCapabilitiesList(dbConnectionString, dbName);
-            const int LOWER_FUZZY_MATCH_THRESHOLD = 70;
+            const int LOWER_FUZZY_MATCH_THRESHOLD = 50;
 
             if (capabilitiesList.Count != 0)
             {
@@ -19,7 +19,20 @@ namespace BLCoreWebAPI.Processes
                 {
                     // What identifier(s) do we look for in the object to determine it exists?
                     // For now, using a Levenschtein distance algorithm with name field. We can adjust the method behind this, if necessary, later.
-                    int simScore = Fuzz.TokenSetRatio(capability.Name, createNodeJSONObject.Name);
+                    
+                    // Test cases:
+                    // 1) Name = "send gmail"
+                    // 2) Name = "send an email"
+                    // 3) Name = "mail"
+
+                    // Have to lower threshold to 50, for this.
+                    int simScore = Fuzz.PartialRatio(capability.Name, createNodeJSONObject.Name);
+
+                    // Have to lower threshold to 50, for this.
+                    //int simScore = Fuzz.PartialTokenSetRatio(capability.Name, createNodeJSONObject.Name);
+
+                    // Have to lower threshold to 49, for this.
+                    //int simScore = Fuzz.WeightedRatio(capability.Name, createNodeJSONObject.Name); 
 
                     if (simScore >= LOWER_FUZZY_MATCH_THRESHOLD)
                     {
