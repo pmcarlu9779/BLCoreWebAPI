@@ -1,16 +1,20 @@
-﻿using BLCoreWebAPI.Models;
+﻿using BLCoreWebAPI.Database;
+using BLCoreWebAPI.Models;
 using FuzzySharp;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Net.Http;
 
 namespace BLCoreWebAPI.Processes
 {
     public class Node
     {
-        public List<NodeRedNode> createNode(NodeRedNode createNodeJSONObject, string dbConnectionString, string dbName, string nodeRedRepo)
+        public HttpResponseMessage createNode(NodeRedNode createNodeJSONObject, string dbConnectionString, string dbName, string nodeRedRepo)
         {
             Capabilities capabilities = new Capabilities();
             List<NodeRedNode> capabilitiesList = capabilities.getCapabilitiesList(dbConnectionString, dbName);
+            string capabilityExistsMessage;
+            string capabilityAddedMessage;
+            HttpResponseMessage response = new HttpResponseMessage();
             const int LOWER_FUZZY_MATCH_THRESHOLD = 50;
 
             if (capabilitiesList.Count != 0)
@@ -36,20 +40,30 @@ namespace BLCoreWebAPI.Processes
 
                     if (simScore >= LOWER_FUZZY_MATCH_THRESHOLD)
                     {
-                        // Then capability exists in the collection. Break, and return message.
-                        break;
+                        capabilityExistsMessage = $"The capability: {capability.Name} already exists.";
+                        response.StatusCode = System.Net.HttpStatusCode.Found;
+                        response.Content = new StringContent(capabilityExistsMessage);
+                        return response;
                     }
                 }
-
-                // return capabilityExistsMessage;
             }
 
-            // Then, insert that NodeRedNode object into MongoDB.
+            addNodeToDB(createNodeJSONObject, dbConnectionString, dbName);
+            capabilityAddedMessage = $"The capability: {createNodeJSONObject.Name} has been learned.";
+            response.StatusCode = System.Net.HttpStatusCode.Created;
+            response.Content = new StringContent(capabilityAddedMessage);
+
+            //addNodeToNodeRedRepo();
+
             // from node-red util.js - bytes.push(Math.round(0xff*Math.random()).toString(16).padStart(2,'0'));
 
-            //NodeRedNode nodeRedNode = new NodeRedNode();
-            //return nodeRedNode;
-            return capabilitiesList;
+            return response;
+        }
+
+        public void addNodeToDB(NodeRedNode createNodeJSONObject, string dbConnectionString, string dbName)
+        {
+            MongoDBHelper mongo = new MongoDBHelper(dbConnectionString, dbName);
+            mongo.InsertDocument("capabilities", createNodeJSONObject);
         }
 
         public void addNodeToNodeRedRepo()

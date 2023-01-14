@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
-using System.Web.Http.Description;
+using System.Net.Http;
 
 namespace BLCoreWebAPI.Controllers
 {
@@ -34,14 +34,13 @@ namespace BLCoreWebAPI.Controllers
         }
 
         [HttpPost]
-        [ResponseType(typeof(List<NodeRedNode>))]
         [Route("Node")]
-        public List<NodeRedNode> Node(NodeRedNode createNodeJSONObject)
+        public HttpResponseMessage Node(NodeRedNode createNodeJSONObject)
         {
             Node node = new Node();
-            List<NodeRedNode> nodeRedNode = node.createNode(createNodeJSONObject, _connectionStrings.dbConnectionString, _connectionStrings.dbName, _gitRepositories.nodeRedRepo);
-            _logger.LogInformation($"Created Node: {nodeRedNode}");
-            return nodeRedNode;
+            HttpResponseMessage createNodeMessage = node.createNode(createNodeJSONObject, _connectionStrings.dbConnectionString, _connectionStrings.dbName, _gitRepositories.nodeRedRepo);
+            _logger.LogInformation(createNodeMessage.Content.ToString());
+            return createNodeMessage;
         }
     }
 }
