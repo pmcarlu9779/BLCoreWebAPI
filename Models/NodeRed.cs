@@ -6,8 +6,16 @@ namespace BLCoreWebAPI.Models
     [BsonIgnoreExtraElements]
     public partial class NodeRedNode
     {
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        //[BsonElement("_id")]
+        //[BsonId]
+        //[BsonRepresentation(BsonType.ObjectId)]
+        //public string _Id { get; set; }
+
+        //[BsonElement("id")]
+        //public string Id { get; set; }
+
+        [BsonElement("_id")]
+        public string _Id { get; set; }
 
         [BsonElement("type")]
         public string Type { get; set; }
