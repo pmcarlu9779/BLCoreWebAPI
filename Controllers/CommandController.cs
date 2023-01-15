@@ -39,7 +39,7 @@ namespace BLCoreWebAPI.Controllers
         {
             Node node = new Node();
             HttpResponseMessage createNodeMessage = node.createNode(createNodeJSONObject, _connectionStrings.dbConnectionString, _connectionStrings.dbName, _gitRepositories.nodeRedRepo);
-            _logger.LogInformation(createNodeMessage.Content.ToString());
+            _logger.LogInformation(createNodeMessage.ReasonPhrase);
             return createNodeMessage;
         }
     }

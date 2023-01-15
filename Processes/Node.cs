@@ -15,7 +15,8 @@ namespace BLCoreWebAPI.Processes
             string capabilityExistsMessage;
             string capabilityAddedMessage;
             HttpResponseMessage response = new HttpResponseMessage();
-            const int LOWER_FUZZY_MATCH_THRESHOLD = 50;
+            HttpRequestMessage request = new HttpRequestMessage();
+            const int LOWER_FUZZY_MATCH_THRESHOLD = 60;
 
             if (capabilitiesList.Count != 0)
             {
@@ -40,18 +41,18 @@ namespace BLCoreWebAPI.Processes
 
                     if (simScore >= LOWER_FUZZY_MATCH_THRESHOLD)
                     {
-                        capabilityExistsMessage = $"The capability: {capability.Name} already exists.";
+                        capabilityExistsMessage = $"The capability \"{capability.Name}\" already exists.";
                         response.StatusCode = System.Net.HttpStatusCode.Found;
-                        response.Content = new StringContent(capabilityExistsMessage);
+                        response.ReasonPhrase = capabilityExistsMessage;
                         return response;
                     }
                 }
             }
 
             addNodeToDB(createNodeJSONObject, dbConnectionString, dbName);
-            capabilityAddedMessage = $"The capability: {createNodeJSONObject.Name} has been learned.";
+            capabilityAddedMessage = $"The capability \"{createNodeJSONObject.Name}\" has been learned.";
             response.StatusCode = System.Net.HttpStatusCode.Created;
-            response.Content = new StringContent(capabilityAddedMessage);
+            response.ReasonPhrase = capabilityAddedMessage;
 
             //addNodeToNodeRedRepo();
 
