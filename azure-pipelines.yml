@@ -8,7 +8,6 @@ trigger:
 
 pool:
   name: default
-  demands: Limit -equals DisAbleParallel 
 
 variables:
   buildConfiguration: 'Release'
