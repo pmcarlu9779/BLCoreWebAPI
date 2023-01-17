@@ -7,7 +7,8 @@ trigger:
 - master
 
 pool:
-  vmImage: NodeRedServer
+  name: default
+  demands: Limit -equals DisAbleParallel 
 
 variables:
   buildConfiguration: 'Release'
