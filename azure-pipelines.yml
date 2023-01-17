@@ -21,6 +21,6 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- checkout: MyGitHubRepo
+- checkout: BLCoreWebAPI
 - script: dotnet build /home/broomorlampadmin/github_repos/BLCoreWebAPI/BLCore.sln --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
