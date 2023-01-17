@@ -3,6 +3,14 @@
 # Add steps that run tests, create a NuGet package, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
+resources:
+  repositories:
+  - repository: BLCoreWebAPI
+    type: github
+    endpoint: name_of_service_connection_you_created
+    name: pmcarlu9779/BLCoreWebAPI
+    ref: master
+
 trigger:
 - master
 
