@@ -20,15 +20,7 @@ pool:
 variables:
   buildConfiguration: 'Release'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '/home/broomorlampadmin/github_repos/BLCoreWebAPI/BLCore.sln'
-    arguments: '--configuration $(buildConfiguration)'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'publish'
-    publishWebProjects: true
-    arguments: '/home/broomorlampadmin/github_repos/BLCoreWebAPI/BLCore.sln --configuration $(buildConfiguration)'
-    zipAfterPublish: false
+steps:
+  - checkout: BLCoreWebAPI
+  - script: dotnet build /home/broomorlampadmin/github_repos/BLCoreWebAPI/BLCore.sln --configuration $(buildConfiguration)
+  - script: dotnet publish /home/broomorlampadmin/github_repos/BLCoreWebAPI/BLCore.sln --configuration $(buildConfiguration)
