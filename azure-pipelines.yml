@@ -23,4 +23,3 @@ variables:
 steps:
   - checkout: BLCoreWebAPI
   - script: dotnet build /home/broomorlampadmin/github_repos/BLCoreWebAPI/BLCore.sln --configuration $(buildConfiguration)
-  - script: dotnet publish /home/broomorlampadmin/github_repos/BLCoreWebAPI/BLCore.sln --configuration $(buildConfiguration)
