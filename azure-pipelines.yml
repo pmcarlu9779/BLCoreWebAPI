@@ -18,7 +18,7 @@ pool:
   name: default
 
 variables:
-  buildConfiguration: 'Development'
+  buildConfiguration: 'Release'
 
 steps:
   - checkout: BLCoreWebAPI
