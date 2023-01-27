@@ -1,0 +1,26 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+resources:
+  repositories:
+  - repository: BLCoreWebAPI
+    type: github
+    endpoint: pmcarlu9779
+    name: pmcarlu9779/BLCoreWebAPI
+    ref: master
+
+trigger:
+- master
+
+pool:
+  name: default
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+  - checkout: BLCoreWebAPI
+  - script: dotnet build /home/broomorlampadmin/github_repos/BLCoreWebAPI/BLCore.sln --configuration $(buildConfiguration)
+  - script: dotnet publish /home/broomorlampadmin/github_repos/BLCoreWebAPI/BLCore.sln --configuration $(buildConfiguration)
