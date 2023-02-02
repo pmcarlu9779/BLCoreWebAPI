@@ -6,10 +6,11 @@ namespace BLCoreWebAPI.Processes
 {
     public class Capabilities
     {
-        public List<NodeRedNode> getCapabilitiesList(string dbConnectionString, string dbName)
+        public List<dynamic> getCapabilitiesList(string dbConnectionString, string dbName)
         {
             MongoDBHelper mongo = new MongoDBHelper(dbConnectionString, dbName);
-            List<NodeRedNode> capabilitiesList = mongo.LoadAllDocuments<NodeRedNode>("capabilities");
+            //List<NodeRedNode> capabilitiesList = mongo.LoadAllDocuments<NodeRedNode>("capabilities");
+            List<dynamic> capabilitiesList = mongo.LoadAllDocuments<dynamic>("capabilities");
             return capabilitiesList;
         }
     }

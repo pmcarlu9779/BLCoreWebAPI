@@ -1,19 +1,14 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace BLCoreWebAPI.Models
 {
     [BsonIgnoreExtraElements]
     public partial class NodeRedNode
     {
-        //[BsonElement("_id")]
-        //[BsonId]
-        //[BsonRepresentation(BsonType.ObjectId)]
-        //public string _Id { get; set; }
-
-        //[BsonElement("id")]
-        //public string Id { get; set; }
-
         [BsonElement("_id")]
         public string _Id { get; set; }
 
@@ -57,7 +52,7 @@ namespace BLCoreWebAPI.Models
         public bool Senderr { get; set; }
 
         [BsonElement("headers")]
-        public dynamic Headers { get; set; }
+        public List<string> Headers { get; set; }
 
         [BsonElement("x")]
         public int X { get; set; }
@@ -66,7 +61,7 @@ namespace BLCoreWebAPI.Models
         public int Y { get; set; }
 
         [BsonElement("wires")]
-        public dynamic Wires { get; set; }
+        public List<List<string>> Wires { get; set; }
 
         [BsonElement("info")]
         public string Info { get; set; }

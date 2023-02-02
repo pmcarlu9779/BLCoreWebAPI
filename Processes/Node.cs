@@ -1,56 +1,75 @@
 ﻿using BLCoreWebAPI.Database;
 using BLCoreWebAPI.Models;
 using FuzzySharp;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Net.Http;
+using System.Text.Json;
+using System.Web.Http;
 
 namespace BLCoreWebAPI.Processes
 {
     public class Node
     {
-        public HttpResponseMessage createNode(NodeRedNode createNodeJSONObject, string dbConnectionString, string dbName, string nodeRedRepo)
+        public HttpResponseMessage createNode(string createNodeJSONString, string dbConnectionString, string dbName)
         {
             Capabilities capabilities = new Capabilities();
-            List<NodeRedNode> capabilitiesList = capabilities.getCapabilitiesList(dbConnectionString, dbName);
+            List<dynamic> capabilitiesList = capabilities.getCapabilitiesList(dbConnectionString, dbName);
+            var createNodeJSONObject = BsonSerializer.Deserialize<dynamic>(createNodeJSONString);
             string capabilityExistsMessage;
             string capabilityAddedMessage;
             HttpResponseMessage response = new HttpResponseMessage();
-            HttpRequestMessage request = new HttpRequestMessage();
             const int LOWER_FUZZY_MATCH_THRESHOLD = 60;
 
-            if (capabilitiesList.Count != 0)
+            if (createNodeJSONObject.name != "")
             {
-                foreach (NodeRedNode capability in capabilitiesList)
+                if (capabilitiesList.Count != 0)
                 {
-                    // What identifier(s) do we look for in the object to determine it exists?
-                    // For now, using a Levenschtein distance algorithm with name field. We can adjust the method behind this, if necessary, later.
-                    
-                    // Test cases:
-                    // 1) Name = "send gmail"
-                    // 2) Name = "send an email"
-                    // 3) Name = "mail"
-
-                    // Have to lower threshold to 50, for this.
-                    int simScore = Fuzz.PartialRatio(capability.Name, createNodeJSONObject.Name);
-
-                    // Have to lower threshold to 50, for this.
-                    //int simScore = Fuzz.PartialTokenSetRatio(capability.Name, createNodeJSONObject.Name);
-
-                    // Have to lower threshold to 49, for this.
-                    //int simScore = Fuzz.WeightedRatio(capability.Name, createNodeJSONObject.Name); 
-
-                    if (simScore >= LOWER_FUZZY_MATCH_THRESHOLD)
+                    foreach (dynamic capability in capabilitiesList)
                     {
-                        capabilityExistsMessage = $"The capability \"{capability.Name}\" already exists.";
-                        response.StatusCode = System.Net.HttpStatusCode.Found;
-                        response.ReasonPhrase = capabilityExistsMessage;
-                        return response;
+                        // What identifier(s) do we look for in the object to determine it exists?
+                        // For now, using a Levenschtein distance algorithm with name field. We can adjust the method behind this, if necessary, later.
+
+                        // Test cases:
+                        // 1) Name = "send gmail"
+                        // 2) Name = "send an email"
+                        // 3) Name = "mail"
+
+                        // Have to lower threshold to 50, for this.
+                        int simScore = Fuzz.PartialRatio(capability.name, createNodeJSONObject.name);
+
+                        // Have to lower threshold to 50, for this.
+                        //int simScore = Fuzz.PartialTokenSetRatio(capability.Name, createNodeJSONObject.Name);
+
+                        // Have to lower threshold to 49, for this.
+                        //int simScore = Fuzz.WeightedRatio(capability.Name, createNodeJSONObject.Name); 
+
+                        if (simScore >= LOWER_FUZZY_MATCH_THRESHOLD)
+                        {
+                            capabilityExistsMessage = $"The capability '{capability.name}' already exists.";
+                            response.StatusCode = System.Net.HttpStatusCode.Found;
+                            response.ReasonPhrase = capabilityExistsMessage;
+                            return response;
+                        }
                     }
                 }
+
+            } else
+            {
+                // Reject the incoming node object. Give response of Bad Request.
+                response.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                response.ReasonPhrase = "Name property is empty.";
+                return response;
             }
 
-            addNodeToDB(createNodeJSONObject, dbConnectionString, dbName);
-            capabilityAddedMessage = $"The capability \"{createNodeJSONObject.Name}\" has been learned.";
+            //addNodeToDB(createNodeJSONObject, dbConnectionString, dbName);
+
+            addNodeToDBViaDynamicObject(createNodeJSONObject, dbConnectionString, dbName);
+
+            capabilityAddedMessage = $"The capability '{createNodeJSONObject.name}' has been learned.";
             response.StatusCode = System.Net.HttpStatusCode.Created;
             response.ReasonPhrase = capabilityAddedMessage;
 
@@ -67,17 +86,32 @@ namespace BLCoreWebAPI.Processes
             mongo.InsertDocument("capabilities", createNodeJSONObject);
         }
 
+        public void addNodeToDBViaDynamicObject(object document, string dbConnectionString, string dbName)
+        {
+            //dynamic dynamicObject = JsonConvert.DeserializeObject<JsonDocument>(createNodeJSONString); - Resulted in $numberLong entries for the integer values in DB.
+            //var dynamicObject = JsonConvert.DeserializeObject<dynamic>(createNodeJSONString)!; - Resulted in nothing but Jsonvalue entries for each property.
+            //var jsonElement = JsonSerializer.Deserialize<JsonElement>(createNodeJSONString); - Resulted in only an object id and nothing else.  Those who are responsible have been sacked.
+            //var dynamicObject = JsonConvert.DeserializeObject<ExpandoObject>(createNodeJSONString); - Wik.
+            //dynamic dynamicObject = JsonConvert.DeserializeObject<NodeRedNode>(createNodeJSONString); - Also wik.
+            MongoDBHelper mongo = new MongoDBHelper(dbConnectionString, dbName);
+            mongo.InsertDocument("capabilities", document);
+        }
+
         public void addNodeToNodeRedRepo()
         {
-            // Merge new node object into NodeRed repo file.
-            string gitCommand = "git";
-            string gitAddArgument = @"add -A";
-            string gitCommitArgument = @"commit ""explanations_of_changes""";
-            string gitPushArgument = @"push our_remote";
+            /* Merge new node object into NodeRed repo file.
+             * Turns out this can be done through the NodeRed Admin API.
+             * string gitCommand = "git";
+             * string gitAddArgument = @"add -A";
+             * string gitCommitArgument = @"commit ""explanations_of_changes""";
+             * string gitPushArgument = @"push our_remote";
+             * 
+             * System.Diagnostics.Process.Start(gitCommand, gitAddArgument);
+             * System.Diagnostics.Process.Start(gitCommand, gitCommitArgument);
+             * System.Diagnostics.Process.Start(gitCommand, gitPushArgument);
+             */
 
-            System.Diagnostics.Process.Start(gitCommand, gitAddArgument);
-            System.Diagnostics.Process.Start(gitCommand, gitCommitArgument);
-            System.Diagnostics.Process.Start(gitCommand, gitPushArgument);
+
         }
 
         public void pullNodeRedConfigFromRepo()

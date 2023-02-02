@@ -25,20 +25,20 @@ namespace BLCoreWebAPI.Controllers
 
         [HttpGet]
         [Route("Capabilities")]
-        public List<NodeRedNode> Capabilities()
+        public List<dynamic> Capabilities()
         {
             Capabilities capabilities = new Capabilities();
-            List<NodeRedNode> capabilitiesList = capabilities.getCapabilitiesList(_connectionStrings.dbConnectionString, _connectionStrings.dbName);
+            List<dynamic> capabilitiesList = capabilities.getCapabilitiesList(_connectionStrings.dbConnectionString, _connectionStrings.dbName);
             _logger.LogInformation($"Capabilities list: {capabilitiesList}");
             return capabilitiesList;
         }
 
         [HttpPost]
         [Route("Node")]
-        public HttpResponseMessage Node(NodeRedNode createNodeJSONObject)
+        public HttpResponseMessage Node(string createNodeJSONString)
         {
             Node node = new Node();
-            HttpResponseMessage createNodeMessage = node.createNode(createNodeJSONObject, _connectionStrings.dbConnectionString, _connectionStrings.dbName, _gitRepositories.nodeRedRepo);
+            HttpResponseMessage createNodeMessage = node.createNode(createNodeJSONString, _connectionStrings.dbConnectionString, _connectionStrings.dbName);
             _logger.LogInformation(createNodeMessage.ReasonPhrase);
             return createNodeMessage;
         }
